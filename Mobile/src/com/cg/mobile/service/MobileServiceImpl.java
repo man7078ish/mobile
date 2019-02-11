@@ -1,13 +1,11 @@
 package com.cg.mobile.service;
 
 import java.util.HashMap;
-import java.util.Scanner;
 
 import com.cg.mobile.bean.Mobile_info;
-import com.cg.mobile.bean.Purchase_details;
-import com.cg.mobile.dao.container;
 import com.cg.mobile.dao.mobileDao;
 import com.cg.mobile.dao.mobileRepo;
+import com.cg.mobile.exception.MobilePurchaseException;
 
 public class MobileServiceImpl implements mobileService {
 	mobileRepo dao;
@@ -18,7 +16,7 @@ public class MobileServiceImpl implements mobileService {
 	}
 
 	
-	public void validate_mob(int mobno,HashMap<Integer,Mobile_info> hm1,int mobId) {
+	public void validate_mob(int mobno,HashMap<Integer,Mobile_info> hm1,int mobId)throws MobilePurchaseException {
 		Mobile_info md1=null;
 		int count=0;
 		for(Integer key: hm1.keySet())
@@ -30,7 +28,16 @@ public class MobileServiceImpl implements mobileService {
 		count=md1.getCount();
 		if(mobno>count)
 		{
-			System.out.println("not sufficient mobiles");
+			try
+			{
+			throw new MobilePurchaseException("Not sufficient mobiles");
+		}
+			catch(MobilePurchaseException e)
+			{
+				System.out.println(e.getMessage());
+				
+			}
+			//throw new MobilePurchaseException("Not sufficient mobiles");
 		}
 		else
 		{
@@ -39,7 +46,7 @@ public class MobileServiceImpl implements mobileService {
 	}
 
 	@Override
-	public void validate_count(HashMap<Integer, Mobile_info> hm1,int mobileId) {
+	public void validate_count(HashMap<Integer, Mobile_info> hm1,int mobileId)throws MobilePurchaseException {
 		// TODO Auto-generated method stub
 		Mobile_info md1=null;
 		int count=0;
@@ -57,9 +64,61 @@ public class MobileServiceImpl implements mobileService {
 		}
 		else
 		{
-			System.out.println("not available");
+			try
+			{
+			throw new MobilePurchaseException("mobiles not available");
+		}
+			catch(MobilePurchaseException e)
+			{
+				System.out.println(e.getMessage());
+				
+			}
+			//throw new MobilePurchaseException("mobiles not available");
 			//throw new lessCountException();
 		}
+	}
+
+
+	@Override
+	public boolean validate_mobId(HashMap<Integer, Mobile_info> hm1, int mobileId) throws MobilePurchaseException {
+		// TODO Auto-generated method stub
+		Mobile_info md1=null;
+		int count=0;
+		/*for(Integer key: hm1.keySet())
+		{   if(key==mobileId) {
+			md1=hm1.get(mobileId);
+		}
+		else
+		{
+			try
+			{
+			throw new MobilePurchaseException("mobileID Unavailable");
+		}
+			catch(MobilePurchaseException e)
+			{
+				System.out.println(e.getMessage());
+			}
+		}
+		
+		}*/
+		if( !(hm1.keySet().contains(mobileId)))
+				{
+			try
+			{
+			throw new MobilePurchaseException("mobileID Unavailable");
+		}
+			catch(MobilePurchaseException e)
+			{
+				System.out.println(e.getMessage());
+				return false;
+			}
+				}
+		else
+		{
+			return true;
+		}
+	
+		
 	}
 	
 }
