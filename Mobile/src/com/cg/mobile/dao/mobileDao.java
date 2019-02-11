@@ -6,7 +6,7 @@ import java.util.Map;
 import com.cg.mobile.bean.Mobile_info;
 
 public class mobileDao implements mobileRepo {
-	public Map<Integer,Mobile_info> hm1;
+	public HashMap<Integer, Mobile_info> hm1;
 	public mobileDao()
 	{
 		Mobile_info ob1=new Mobile_info("Samsung","1000",500,4);

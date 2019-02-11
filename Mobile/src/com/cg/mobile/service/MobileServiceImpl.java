@@ -11,7 +11,7 @@ public class MobileServiceImpl implements mobileService {
 	mobileRepo dao;
 	
 	public MobileServiceImpl(mobileDao dao) {
-		super();
+		
 		dao=new mobileDao();
 	}
 
